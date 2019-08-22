@@ -1,0 +1,63 @@
+server:
+  port: 7000
+  servlet:
+    context-path: /ad-sponsor
+
+spring:
+  application:
+    name: ad-sponsor
+  datasource:
+    url: jdbc:mysql://localhost:3306/ad?autoReconnect=true
+    username: root
+    password: Litchi8!
+    tomcat:
+      max-active: 4
+      min-idle: 2
+      initial-size: 2
+    druid:
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,slf4j
+      initial-size: 5
+      maxActive: 20
+      maxPoolPreparedStatementPerConnectionSize: 20
+      maxWait: 60000
+      min-idle: 5
+      minEvictableIdleTimeMillis: 300000
+      poolPreparedStatements: true
+      stat-view-servlet:
+        allow: 127.0.0.1,192.168.163.1
+        deny: 192.168.1.73
+        login-password: 123456
+        login-username: admin
+        reset-enable: false
+        url-pattern: /druid/*
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      timeBetweenEvictionRunsMillis: 60000
+      validationQuery: SELECT 1 FROM DUAL
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+        url-pattern: /*
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    call-setters-on-nulls: true
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      column-underline: true
+      field-strategy: not_empty
+      id-type: UUID
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+    refresh: true
+  mapperLocations: classpath:/mybatis/mapper/*.xml
+  typeAliasesPackage: com.simple.spring.**.entities
+  typeEnumsPackage: ''
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://server1:8000/eureka/
